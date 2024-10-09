@@ -53,3 +53,50 @@ const deeplyNestedArray = [1, [2, [3, [4, [5, [6, [7, [8, [9]]]]]]]]];
 // Flatten the deeply nested array
 const flattenedArray = trampoline(flatArrayTrampoline, deeplyNestedArray);
 console.log(flattenedArray);
+
+
+
+//Part 3
+
+//cache the element where the prime numbers will be displayed.
+
+const primeContainer = document.getElementById('prime-container');
+
+
+//Write a Function to Check Prime Numbers
+const isPrime = (num) => {
+    if (num <= 1) return false;
+    for (let i = 2; i <= Math.sqrt(num); i++) {
+        if (num % i === 0) return false;
+    }
+    return true;
+};
+
+//Implement Deferred Execution with setTimeout
+function displayPrimes(n) {
+    let currentNum = 1;
+
+    function findAndRenderPrime() {
+        if (currentNum > n) {
+            alert('Calculation is finished');
+            return;
+        }
+
+        // Check if the current number is prime and display it if so
+        if (isPrime(currentNum)) {
+            const primeElement = document.createElement('p');
+            primeElement.textContent = currentNum;
+            primeContainer.appendChild(primeElement);
+        }
+
+        // Increment the number and set the next execution using setTimeout
+        currentNum++;
+        setTimeout(findAndRenderPrime, 0); // Defer the next iteration
+    }
+
+    findAndRenderPrime();
+}
+
+// Run the function for n = 10,000
+displayPrimes(10000);
+
